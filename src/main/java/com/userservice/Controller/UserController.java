@@ -12,5 +12,11 @@ import java.util.List;
 
 @RestController
 public class UserController {
+    @Autowired
+    private UserService userService;
 
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> allUser(){
+        return new ResponseEntity<>(userService.allUser(), HttpStatus.ACCEPTED);
+    }
 }
