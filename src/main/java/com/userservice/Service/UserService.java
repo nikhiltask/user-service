@@ -12,6 +12,13 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
+    public User update(User user,String userId) throws Exception {
+        if(userRepository.findById(userId).isPresent()){
+            return this.userRepository.save(user);
+        }
+        else{
+            throw new Exception("ID doesnot Exist");
+        }
+    }
 
 }
