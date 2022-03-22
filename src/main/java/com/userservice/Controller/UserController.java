@@ -18,8 +18,13 @@ import java.util.List;
 
 @RestController
 public class UserController {
-@Autowired
+    @Autowired
     private UserService userService;
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<User> findID(@PathVariable("userId") String userId){
+        return new ResponseEntity<>(userService.findID(userId),HttpStatus.ACCEPTED);
+    }
 
     @DeleteMapping("/users/{userId}")
     public ResponseEntity<String> deleteUserById(@PathVariable("userId") String userId){
