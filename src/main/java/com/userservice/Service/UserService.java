@@ -15,6 +15,21 @@ public class UserService {
 
     public User findID(String id){
         return userRepository.findById(id).get();
-
     }
+    public String userDeleteById(String Id){
+        userRepository.deleteById(Id);
+        return "User Deleted Successfully";
+    }
+    public  User addUser(User user){
+        return userRepository.save(user);
+    }
+    public User update(User user,String userId) throws Exception {
+        if(userRepository.findById(userId).isPresent()){
+            return this.userRepository.save(user);
+        }
+        else{
+            throw new Exception("ID doesnot Exist");
+        }
+    }
+
 }
