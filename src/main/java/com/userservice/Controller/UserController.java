@@ -21,6 +21,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> allUser(){
+        return new ResponseEntity<>(userService.allUser(), HttpStatus.ACCEPTED);
+    }
     @GetMapping("/users/{userId}")
     public ResponseEntity<User> findID(@PathVariable("userId") String userId){
         return new ResponseEntity<>(userService.findID(userId),HttpStatus.ACCEPTED);
