@@ -12,13 +12,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-
-@Document(collection = "UserService")
+//@Document(collection = "UserService")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @ToString
-public class User {
+public class UserDTO {
 
     @Id
     private String userID;
@@ -53,8 +52,4 @@ public class User {
 
     @NotEmpty(message = "Email is required")
     private String email;
-
-    @NotEmpty(message = "Password is required")
-    private String password;
-
 }
