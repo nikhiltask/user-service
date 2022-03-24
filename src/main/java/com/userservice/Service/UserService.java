@@ -20,7 +20,7 @@ public class UserService {
 
     public UserDTO findID(String userId) {
         try {
-            User user=this.userRepository.findById(userId).get();
+            User user=userRepository.findById(userId).get();
             UserDTO userDTO=new UserDTO();
             userDTO.setUserID(user.getUserID());
             userDTO.setFirstName(user.getFirstName());
@@ -36,6 +36,17 @@ public class UserService {
             return userDTO;
         } catch (Exception e) {
             throw new UserNotFoundException("User Not Found Exception");
+        }
+    }
+
+    public User userEmail(String email){
+        if(userRepository.findEmail(email)!=null){
+            return userRepository.findEmail(email);
+
+
+        }
+        else{
+            throw new UserNotFoundException("Email Not Found Exception");
         }
     }
 

@@ -48,4 +48,8 @@ public class UserController {
     public ResponseEntity<User> update(@Valid @RequestBody User user, @PathVariable("userId")  String userId) throws Exception {
         return new ResponseEntity<>(userService.update(user,userId),HttpStatus.ACCEPTED);
     }
+    @GetMapping("/getUserByEmail/{emailId}")
+    public ResponseEntity<User> userByEmail(@PathVariable("emailId") String emailId){
+        return new ResponseEntity<>(userService.userEmail(emailId),HttpStatus.ACCEPTED);
+    }
 }
