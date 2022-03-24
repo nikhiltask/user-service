@@ -18,52 +18,61 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-public UserDTO findID(String userId){
-    try {
-    User user=userRepository.findById(userId).get();
-    UserDTO userDto=new UserDTO();userDto.setUserID(user.getUserID());userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());userDto.setMiddleName(user.getMiddleName());userDto.setPhoneNumber(user.getPhoneNumber());
-        userDto.setEmail(user.getEmail());userDto.setAddress(user.getAddress());userDto.setDateOfBirth(user.getDateOfBirth());
-        userDto.setEmployeeNumber(user.getEmployeeNumber());userDto.setBloodGroup(user.getBloodGroup());userDto.setGender(user.getGender());
-    return  userDto;
+    public UserDTO findID(String userId) {
+        try {
+            User user=this.userRepository.findById(userId).get();
+            UserDTO userDTO=new UserDTO();
+            userDTO.setUserID(user.getUserID());
+            userDTO.setFirstName(user.getFirstName());
+            userDTO.setLastName(user.getLastName());
+            userDTO.setMiddleName(user.getMiddleName());
+            userDTO.setPhoneNumber(user.getPhoneNumber());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setAddress(user.getAddress());
+            userDTO.setDateOfBirth(user.getDateOfBirth());
+            userDTO.setEmployeeNumber(user.getEmployeeNumber());
+            userDTO.setBloodGroup(user.getBloodGroup().toString());
+            userDTO.setGender(user.getGender().toString());
+            return userDTO;
+        } catch (Exception e) {
+            throw new UserNotFoundException("User Not Found Exception");
+        }
     }
-    catch (Exception e){
-        throw new UserNotFoundException("User Not Found Exception");
-    }
-}
-    public String userDeleteById(String Id){
+
+    public String userDeleteById(String Id) {
         userRepository.deleteById(Id);
         return "User Deleted Successfully";
     }
-    public  User addUser(User user){
+
+    public User addUser(User user) {
         return userRepository.save(user);
     }
-    public User update(User user,String userId) throws Exception {
-        if(userRepository.findById(userId).isPresent()){
+
+    public User update(User user, String userId) throws Exception {
+        if (userRepository.findById(userId).isPresent()) {
             return userRepository.save(user);
-        }
-        else{
+        } else {
             throw new Exception("ID doesnot Exist");
         }
     }
 
-    public List<UserDTO> allUser(Integer page,Integer pageSize) {
-        if(page==null){
-            page=1;
+    public List<UserDTO> allUser(Integer page, Integer pageSize) {
+        if (page == null) {
+            page = 1;
         }
-        if(pageSize==null){
-            pageSize=10;
+        if (pageSize == null) {
+            pageSize = 10;
         }
-        Pageable firstPage = PageRequest.of(page-1, pageSize);
-        List<User> allUsers=  userRepository.findAll(firstPage).toList();
-        List<UserDTO> allUsersDTO=new ArrayList<>();
-        for(User user:allUsers){
-            UserDTO userDTO=new UserDTO(user.getUserID(),user.getFirstName(),user.getMiddleName(),
-                    user.getLastName(),user.getPhoneNumber(),user.getDateOfBirth(),user.getGender(),
-                    user.getAddress(),user.getEmployeeNumber(),user.getBloodGroup(),user.getEmail());
+        Pageable firstPage = PageRequest.of(page - 1, pageSize);
+        List<User> allUsers = userRepository.findAll(firstPage).toList();
+        List<UserDTO> allUsersDTO = new ArrayList<>();
+        for (User user : allUsers) {
+            UserDTO userDTO = new UserDTO(user.getUserID(), user.getFirstName(), user.getMiddleName(),
+                    user.getLastName(), user.getPhoneNumber(), user.getDateOfBirth(), user.getGender(),
+                    user.getAddress(), user.getEmployeeNumber(), user.getBloodGroup(), user.getEmail());
             allUsersDTO.add(userDTO);
         }
-        return  allUsersDTO;
+        return allUsersDTO;
 
     }
 

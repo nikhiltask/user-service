@@ -30,13 +30,13 @@ public class UserController {
         return  new ResponseEntity<>(userService.allUser(page,pageSize), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("{userId}")
     public ResponseEntity<UserDTO> findID(@PathVariable("userId") String userId){
         return new ResponseEntity<>(userService.findID(userId),HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<String> deleteUserById(@PathVariable("userId") String userId){
+    public ResponseEntity<String> userDeleteById(@PathVariable("userId") String userId){
         return new ResponseEntity<>(userService.userDeleteById(userId),HttpStatus.ACCEPTED);
     }
 

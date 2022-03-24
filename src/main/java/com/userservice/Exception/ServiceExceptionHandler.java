@@ -12,7 +12,7 @@ public class ServiceExceptionHandler extends ResponseEntityExceptionHandler {
     ResponseEntity customerNotFoundHandler(Exception exception, ServletWebRequest request){
         ApiError apiError = new ApiError();
         apiError.setMessage(exception.getMessage());
-        apiError.setCode("404");
+        apiError.setCode("500");
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
 }
