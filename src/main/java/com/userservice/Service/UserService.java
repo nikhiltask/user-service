@@ -40,9 +40,8 @@ public class UserService {
     }
 
     public User userEmail(String email){
-        if(userRepository.findEmail(email)!=null){
-            return userRepository.findEmail(email);
-
+        if(userRepository.findByemail(email)!=null){
+            return userRepository.findByemail(email);
 
         }
         else{

@@ -4,7 +4,6 @@ import com.userservice.Model.User;
 import com.userservice.Model.UserDTO;
 import com.userservice.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.ws.rs.QueryParam;
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3001")
 @RestController
 @RequestMapping("/users")
 public class UserController {
