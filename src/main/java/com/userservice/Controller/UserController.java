@@ -40,11 +40,11 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<User> addUser(@RequestBody @Valid User user){
+    public ResponseEntity<UserDTO> addUser(@RequestBody @Valid User user) throws Exception {
         return new ResponseEntity<>(userService.addUser(user),HttpStatus.ACCEPTED);
     }
     @PutMapping("/{userId}")
-    public ResponseEntity<User> update(@Valid @RequestBody User user, @PathVariable("userId")  String userId) throws Exception {
+    public ResponseEntity<UserDTO> update(@Valid @RequestBody User user, @PathVariable("userId")  String userId) throws Exception {
         return new ResponseEntity<>(userService.update(user,userId),HttpStatus.ACCEPTED);
     }
     @GetMapping("/getUserByEmail/{emailId}")

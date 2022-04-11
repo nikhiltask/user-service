@@ -1,5 +1,6 @@
 package com.userservice.Service;
 
+import com.userservice.ConstantFiles.ConstantNames;
 import com.userservice.Exception.UserNotFoundException;
 import com.userservice.Model.User;
 import com.userservice.Model.UserDTO;
@@ -31,38 +32,73 @@ public class UserService {
             userDTO.setAddress(user.getAddress());
             userDTO.setDateOfBirth(user.getDateOfBirth());
             userDTO.setEmployeeNumber(user.getEmployeeNumber());
-            userDTO.setBloodGroup(user.getBloodGroup().toString());
-            userDTO.setGender(user.getGender().toString());
+            userDTO.setBloodGroup(user.getBloodGroup());
+            userDTO.setGender(user.getGender());
             return userDTO;
         } catch (Exception e) {
-            throw new UserNotFoundException("User Not Found Exception");
+            throw new UserNotFoundException(ConstantNames.ERROR_CODE);
         }
     }
 
     public User userEmail(String email){
         if(userRepository.findByemail(email)!=null){
             return userRepository.findByemail(email);
-
         }
         else{
-            throw new UserNotFoundException("Email Not Found Exception");
+            throw new UserNotFoundException(ConstantNames.EMAIL_NOT_EXIST);
         }
     }
 
     public String userDeleteById(String Id) {
-        userRepository.deleteById(Id);
-        return "User Deleted Successfully";
+        if(userRepository.findById(Id).isPresent()){
+            userRepository.deleteById(Id);
+            return ConstantNames.SUCCESS_CODE;
+        }else{
+            throw new UserNotFoundException(ConstantNames.ERROR_CODE);
+        }
+
     }
 
-    public User addUser(User user) {
-        return userRepository.save(user);
+    public UserDTO addUser(User user) throws Exception {
+        User email=userRepository.findByemail(user.getEmail());
+        if(email!=null){
+            throw new UserNotFoundException(ConstantNames.EMAIL_ERROR);
+        }
+        userRepository.save(user);
+        UserDTO userDTO=new UserDTO();
+        userDTO.setUserID(user.getUserID());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setMiddleName(user.getMiddleName());
+        userDTO.setPhoneNumber(user.getPhoneNumber());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setAddress(user.getAddress());
+        userDTO.setDateOfBirth(user.getDateOfBirth());
+        userDTO.setEmployeeNumber(user.getEmployeeNumber());
+        userDTO.setBloodGroup(user.getBloodGroup());
+        userDTO.setGender(user.getGender());
+        return userDTO;
     }
 
-    public User update(User user, String userId) throws Exception {
+    public UserDTO update(User user, String userId) throws Exception {
         if (userRepository.findById(userId).isPresent()) {
-            return userRepository.save(user);
-        } else {
-            throw new Exception("ID doesnot Exist");
+            userRepository.save(user);
+            UserDTO userDTO=new UserDTO();
+            userDTO.setUserID(user.getUserID());
+            userDTO.setFirstName(user.getFirstName());
+            userDTO.setLastName(user.getLastName());
+            userDTO.setMiddleName(user.getMiddleName());
+            userDTO.setPhoneNumber(user.getPhoneNumber());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setAddress(user.getAddress());
+            userDTO.setDateOfBirth(user.getDateOfBirth());
+            userDTO.setEmployeeNumber(user.getEmployeeNumber());
+            userDTO.setBloodGroup(user.getBloodGroup());
+            userDTO.setGender(user.getGender());
+            return userDTO;
+
+    } else {
+            throw new UserNotFoundException(ConstantNames.ERROR_CODE);
         }
     }
 

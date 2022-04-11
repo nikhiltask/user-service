@@ -1,5 +1,8 @@
 package com.userservice.Model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.userservice.Enum.BloodGroup;
+import com.userservice.Enum.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -37,10 +41,10 @@ public class User {
     private String phoneNumber;
 
     @NotNull(message = "Date of Birth is required")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
 
-    @NotEmpty(message = "Gender is required")
-    private String gender;
+    private Gender gender;
 
     @NotEmpty(message = "Address Status is required")
     private String address ;
@@ -48,10 +52,11 @@ public class User {
     @NotEmpty(message = "Employee Number is required")
     private String employeeNumber;
 
-    @NotEmpty(message = "Blood Group is required")
-    private String bloodGroup;
+
+    private BloodGroup bloodGroup;
 
     @NotEmpty(message = "Email is required")
+    @Pattern(regexp = "^[\\wA-Za-z0-9]+(?:\\.[\\wA-Za-z0-9+_-]+[A-Za-z0-9]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "please enter proper email")
     private String email;
 
     @NotEmpty(message = "Password is required")
